@@ -143,15 +143,23 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex">
-      {/* Sidebar */}
-      <aside className="w-72 bg-[#0F0F0F] text-white p-8 flex flex-col">
-        <div className="mb-12">
-          <h2 className="text-xl font-bold tracking-tighter">Faisal Dashboard</h2>
-          <p className="text-white/40 text-xs font-mono mt-1">v1.0.0</p>
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col md:flex-row">
+      {/* Sidebar / Mobile Header */}
+      <aside className="w-full md:w-72 bg-[#0F0F0F] text-white p-6 md:p-8 flex flex-col">
+        <div className="flex items-center justify-between md:block mb-8 md:mb-12">
+          <div>
+            <h2 className="text-xl font-bold tracking-tighter">Faisal Dashboard</h2>
+            <p className="text-white/40 text-xs font-mono mt-1">v1.0.0</p>
+          </div>
+          <button 
+            onClick={handleLogout}
+            className="md:hidden p-2 text-red-400"
+          >
+            <LogOut className="w-6 h-6" />
+          </button>
         </div>
         
-        <nav className="flex-1 space-y-2">
+        <nav className="flex md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-4 md:pb-0">
           {[
             { id: 'projects', label: 'Projects', icon: Briefcase },
             { id: 'blog', label: 'Blog Posts', icon: FileText },
@@ -160,15 +168,15 @@ export default function AdminDashboard() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === tab.id ? 'bg-[#7C3AED] text-white' : 'text-white/60 hover:bg-white/5'}`}
+              className={`flex-shrink-0 md:w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all ${activeTab === tab.id ? 'bg-[#7C3AED] text-white' : 'text-white/60 hover:bg-white/5'}`}
             >
               <tab.icon className="w-5 h-5" />
-              {tab.label}
+              <span className="whitespace-nowrap">{tab.label}</span>
             </button>
           ))}
         </nav>
 
-        <div className="pt-8 border-t border-white/10">
+        <div className="hidden md:block pt-8 border-t border-white/10 mt-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-full bg-white/10 overflow-hidden">
               {user.photoURL && <img src={user.photoURL} alt="Avatar" className="w-full h-full object-cover" />}
@@ -189,22 +197,22 @@ export default function AdminDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-12 overflow-y-auto">
-        <div className="flex justify-between items-center mb-12">
+      <main className="flex-1 p-6 md:p-12 overflow-y-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 gap-6">
           <div>
             <h1 className="text-4xl font-bold capitalize">{activeTab}</h1>
             <p className="text-[#0F0F0F]/40 font-medium">Manage your {activeTab} content</p>
           </div>
           <button 
             onClick={() => openModal()}
-            className="bg-[#7C3AED] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#0F0F0F] transition-all"
+            className="w-full sm:w-auto bg-[#7C3AED] text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#0F0F0F] transition-all"
           >
             <Plus className="w-5 h-5" />
             Add New
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item) => (
             <div key={item.id} className="bg-white p-6 rounded-3xl border border-[#0F0F0F]/5 shadow-sm group">
               {item.image && (
