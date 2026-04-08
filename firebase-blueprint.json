@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "projects": {
+      "title": "Project",
+      "description": "A portfolio project item",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The name of the project" },
+        "description": { "type": "string", "description": "Short description of the project" },
+        "image": { "type": "string", "description": "URL of the project image" },
+        "category": { "type": "string", "description": "Project category (e.g. Web Dev, UI/UX)" },
+        "link": { "type": "string", "description": "Link to the live project" },
+        "date": { "type": "string", "description": "Completion date" },
+        "featured": { "type": "boolean", "description": "Whether to show on homepage" },
+        "order": { "type": "number", "description": "Display order" }
+      },
+      "required": ["title", "image", "category"]
+    },
+    "blogPosts": {
+      "title": "Blog Post",
+      "description": "A blog article",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Article title" },
+        "slug": { "type": "string", "description": "URL slug" },
+        "excerpt": { "type": "string", "description": "Short summary" },
+        "content": { "type": "string", "description": "Full markdown content" },
+        "image": { "type": "string", "description": "Cover image URL" },
+        "category": { "type": "string", "description": "Article category" },
+        "date": { "type": "string", "description": "Publication date" },
+        "published": { "type": "boolean", "description": "Whether the post is public" }
+      },
+      "required": ["title", "slug", "content", "image"]
+    },
+    "services": {
+      "title": "Service",
+      "description": "A service offering",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Service name" },
+        "outcome": { "type": "string", "description": "The primary benefit/outcome" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "benefits": { 
+          "type": "array", 
+          "items": { "type": "string" },
+          "description": "List of specific benefits" 
+        },
+        "icon": { "type": "string", "description": "Lucide icon name" },
+        "order": { "type": "number", "description": "Display order" }
+      },
+      "required": ["title", "outcome", "description"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/projects" },
+      "description": "Collection of portfolio projects"
+    },
+    "/blogPosts/{postId}": {
+      "schema": { "$ref": "#/entities/blogPosts" },
+      "description": "Collection of blog articles"
+    },
+    "/services/{serviceId}": {
+      "schema": { "$ref": "#/entities/services" },
+      "description": "Collection of service offerings"
+    }
+  }
+}
